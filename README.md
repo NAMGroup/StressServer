@@ -1,2 +1,2 @@
 # StressServer
-A σιμπλε σερωερ το εμθλατε στρεσσ ψπθ τεστ
+A simple server to simulate cpu stress via a REST API.
