@@ -1,7 +1,8 @@
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi import BackgroundTasks
+from starlette.responses import RedirectResponse
 
 import subprocess
 import time
@@ -10,13 +11,52 @@ import random
 
 app = FastAPI()
 
+REDIRECT_TO=""
+
+def dump(obj):
+  for attr in dir(obj):
+    print("obj.%s = %r" % (attr, getattr(obj, attr)))
 
 @app.get("/")
-def root():
-    return {"ZSM": "PoC"}
+def root( request: Request):
+    client_host = request.client.host
+    client_port = request.client.port
+    params = str(request.query_params)
+    url = f'http://localhost:20000/test/{params}'
+    response = RedirectResponse(url=url)
+
+    
+    return response #{"ZSM": "PoC"}
+
+
+# Msut check for valid url
+@app.get("/redirect_target/")
+async def api_data(request: Request,host: str, port: int):
+    global REDIRECT_TO
+    print("-->",host,"<--")
+    print("-->",port,"<--")
+#    print("-->",dir(request.base_url),"<--")
+    print("-->",request.base_url.port,"<--")
+    print("-->",request.base_url.hostname,"<--")
+    if ( (host == request.base_url.hostname) and (port==request.base_url.port) ):
+        status="NO CONFIG. SAME HOST"
+    else:
+        status="TARGET SET"
+        REDIRECT_TO=':'.join([host,str(port)])
+    return {"TARGET":REDIRECT_TO}
 
 
 
+@app.get("/data/")
+async def api_data(request: Request):
+    params = str(request.query_params)
+    client_host = request.client.host
+    client_port = request.client.port
+    print(client_host,client_port)
+#    url = f'http://localhost:2000/{params}'
+    url = f'http://localhost:20000/{params}'
+    response = RedirectResponse(url=url)
+    return response
 
 
 def _stress(cpus: int, duration: int):
@@ -33,8 +73,9 @@ async def test(background_tasks: BackgroundTasks, q: Optional[str] = None):
         message = f"found query: {q}\n"
     else:
         message = "NO DATA:"
-    background_tasks.add_task(_stress, 1,10,message)
-    return  {"Stress_ENDPOINT": "Cpus"}
+    print("TEST")
+    #background_tasks.add_task(_stress, 1,10,message)
+    return  {"TEST_Stress_ENDPOINT": "Cpus"}
 
 
 

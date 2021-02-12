@@ -6,3 +6,6 @@ pip3 install uvicorn[standard]
 
 http://localhost:8000/browser_stress/?cpu=4;duration=20
 http://localhost:8000/browser_stress_random/
+
+http://localhost:8000/redirect_target/?target=http://localhost:20000/
+http://localhost:8000/redirect_target/?host=localhost;port=80001
