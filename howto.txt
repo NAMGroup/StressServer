@@ -1,0 +1,4 @@
+sudo apt-get install python3-pip
+pip3 install fastapi
+pip3 install uvicorn[standard]
+/home/papajohn/.local/bin/uvicorn  main:app --reload
