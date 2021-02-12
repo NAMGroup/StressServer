@@ -11,7 +11,7 @@ import random
 
 app = FastAPI()
 
-REDIRECT_TO=""
+REDIRECT_TO=None
 
 def dump(obj):
   for attr in dir(obj):
@@ -81,7 +81,8 @@ async def test(background_tasks: BackgroundTasks, q: Optional[str] = None):
 
 
 @app.get("/browser_stress/",summary="Stress CPU", description="Stress cpu. Parameters are cpu for number of cpus (1-12 cpus) to be stressed and time for duration(1-100 seconds).")
-def bstress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+    global REDIRECT_TO
     if cpu<1:
         cpu=1
     if cpu>12:
@@ -91,7 +92,13 @@ def bstress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: O
     if duration>100:
         duration=10
     background_tasks.add_task(_stress, cpu,duration)
-
+    if REDIRECT_TO != None:
+        params = str(request.query_params)
+        print("HERE")
+    #    url = f'http://localhost:2000/{params}'
+        url = f'http://localhost:20000/browser_stress_random/?{params}'
+        response = RedirectResponse(url=url)
+        return response
     #print("The exit code was: %d" % list_files.returncode)
     return {"cpu": cpu, "duration": duration}
 
@@ -113,11 +120,21 @@ def stress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Op
 
 
 @app.get("/browser_stress_random/",summary="Stress CPU", description="Stress cpu. Random number of cpus will be hogged (2-8) for random time (10-30 secs).")
-def brstress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+def brstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+    global REDIRECT_TO
     cpu=random.randint(2,8)
     duration=random.randint(10,30)
+    print("-->",REDIRECT_TO,"<--")
  #   stress_cmd = subprocess.run(["stress-ng", "--cpu", str(cpu), "--timeout",str(time)])
     background_tasks.add_task(_stress, cpu,duration)
+    if REDIRECT_TO != None:
+        params = str(request.query_params)
+        print("HERE")
+    #    url = f'http://localhost:2000/{params}'
+        url = f'http://localhost:20000/browser_stress_random/?{params}'
+        response = RedirectResponse(url=url)
+        return response
+        
     #print("The exit code was: %d" % list_files.returncode)
     return {"cpu": cpu, "duration": duration}    
 
