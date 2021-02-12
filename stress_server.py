@@ -72,7 +72,7 @@ def stress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Op
 
 
 @app.get("/browser_stress_random/",summary="Stress CPU", description="Stress cpu. Random number of cpus will be hogged (2-8) for random time (10-30 secs).")
-def stress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+def brstress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
     cpu=random.randint(2,8)
     duration=random.randint(10,30)
  #   stress_cmd = subprocess.run(["stress-ng", "--cpu", str(cpu), "--timeout",str(time)])
@@ -81,7 +81,7 @@ def stress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Op
     return {"cpu": cpu, "duration": duration}    
 
 @app.post("/stress_random/",summary="Stress CPU", description="Stress cpu. Random number of cpus will be hogged (2-8) for random time (10-30 secs).")
-def stress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
+def rstress(background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
     cpu=random.randint(2,8)
     duration=random.randint(10,30)
  #   stress_cmd = subprocess.run(["stress-ng", "--cpu", str(cpu), "--timeout",str(time)])
