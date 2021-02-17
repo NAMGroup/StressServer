@@ -4,8 +4,19 @@ pip3 install uvicorn[standard]
 /home/papajohn/.local/bin/uvicorn  main:app --reload
 
 
-http://localhost:8000/browser_stress/?cpu=4;duration=20
+http://localhost:8000/browser_stress?cpu=4;duration=20
+
 http://localhost:8000/browser_stress_random/
 
-http://localhost:8000/redirect_target/?target=http://localhost:20000/
-http://localhost:8000/redirect_target/?host=localhost;port=80001
+http://localhost:8000/redirect_target?target=http://localhost:20000/
+http://localhost:8000/redirect_target?host=localhost;port=20000
+
+
+sudo docker exec  -it zsm_poc /bin/bash
+
+
+ docker build -t stress_server_poc_v2 . 
+  docker run -d --name somename -p 12333:80 stress_server_poc_v2
+ docker tag 281cc425c5d9 papajohnuop/5g_nam_lab:zsm_pocv2
+ (docker login)
+ docker push papajohnuop/5g_nam_lab:zsm_pocv2
