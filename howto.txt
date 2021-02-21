@@ -17,6 +17,19 @@ sudo docker exec  -it zsm_poc /bin/bash
 
  docker build -t stress_server_poc_v2 . 
   docker run -d --name somename -p 12333:80 stress_server_poc_v2
- docker tag 281cc425c5d9 papajohnuop/5g_nam_lab:zsm_pocv2
+ //docker tag 281cc425c5d9 papajohnuop/5g_nam_lab:zsm_pocv2
  (docker login)
  docker push papajohnuop/5g_nam_lab:zsm_pocv2
+ docker tag stress_server_poc_v3 papajohnuop/5g_nam_lab:zsm_pocv3
+papajohn@DESKTOP-CFMKHPP:~/projects/REPOS/StressServer$ docker push papajohnuop/5g_nam_lab:zsm_pocv3
+
+/home/papajohn/projects/REPOS/StressServer/
+uvicorn  stress_app.main:app --reload --port 30000
+
+/home/papajohn/projects/REPOS/StressServer/app
+papajohn@DESKTOP-CFMKHPP:~/projects/REPOS/StressServer/app$ uvicorn  main:app --reload 
+
+home/papajohn/projects/REPOS/StressServer/app
+uvicorn  main:app --reload --port 10000
+uvicorn  main:app --reload --port 20000
+uvicorn  main:app --reload --port 30000
