@@ -107,24 +107,7 @@ def _getTargets():
 
 def _redir( target:str, get_req: str,action:str):
     print("START REDIR")
-    #targets=list()
-    #print(os.path.abspath(os.getcwd()))
-    # Using readlines()
-    #try:
-    #    targets_file = open('./targets.txt', 'r')
-        #targets = targets_file.readlines()
-    #    targets = targets_file.read().splitlines()
-
-    #except OSError:
-    #    print ("Could not open/read targets file:")
-    #print(len(targets))
-    #print(targets)
-
-    #for target in targets:
-        #HEREx = requests.get(target)
-    #    print(x.status_code)
-    #    print("-->",x,"<--")
-    
+ 
     
     ft=target+action+"?"+str(get_req.query_params)
     print("----->",ft,"<------")
@@ -181,19 +164,10 @@ def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[in
     if duration>100:
         duration=10
     val,target1,target2= _checkTargets()
-    background_tasks.add_task(_stress, cpu,duration)
+  
     print(request.url)
 
-    '''
-    print(dir(request))
-    print(request.url)
-    print(request.base_url)
-    print(request.path_params)
-    print(request.query_params)
-    print(request.url_for)
-    print(request.method)
-    #print(request)
-    '''
+   
     if val is None:
         print("Target.txt NOT valid")
         print("NO FORWARD")
@@ -206,20 +180,7 @@ def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[in
             if forw is True:
                 get_req=request
                 background_tasks.add_task(_redir, targ,get_req, "stress")
-
-
-        '''
-        elif override==0:
-            print("Forward depending on targets.txt value")
-            print(request.url)
-            get_req=request.url
-            background_tasks.add_task(_redir, get_req)
-        else:
-            print("Alwayes forward")
-            get_req=request.url
-            background_tasks.add_task(_redir, get_req)
-        '''
-
+    background_tasks.add_task(_stress, cpu,duration)
     return {"cpu": cpu, "duration": duration}
 
 
