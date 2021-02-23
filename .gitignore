@@ -1,2 +1,14 @@
 __pycache__/stress_server.cpython-38.pyc
 app/__pycache__/main.cpython-38.pyc
+testing/WS1/main.py
+testing/WS1/targets.txt
+testing/WS1/__pycache__/main.cpython-38.pyc
+testing/WS2/main.py
+testing/WS2/targets.txt
+testing/WS2/__pycache__/main.cpython-38.pyc
+testing/WS3/main.py
+testing/WS3/targets.txt
+testing/WS3/__pycache__/main.cpython-38.pyc
+testing/WS4/main.py
+testing/WS4/targets.txt
+testing/WS4/__pycache__/main.cpython-38.pyc
