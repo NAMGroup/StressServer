@@ -154,19 +154,18 @@ if override ==0  forward depending on value
 otherwise forward at all times
 '''
 @app.get("/stress",summary="Stress CPU", description="Stress cpu. Parameters are cpu for number of cpus (1-12 cpus) to be stressed and time for duration(1-100 seconds).")
-def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10, override: Optional[int] = 0):
+def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 1, override: Optional[int] = 0):
     if cpu<1:
         cpu=1
     if cpu>12:
         cpu=1
     if duration<1:
-        duration=10
+        duration=1
     if duration>100:
-        duration=10
+        duration=1
     val,target1,target2= _checkTargets()
   
     print(request.url)
-
    
     if val is None:
         print("Target.txt NOT valid")
