@@ -183,6 +183,18 @@ def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[in
     return {"cpu": cpu, "duration": duration}
 
 
+@app.get("/sim_clients",summary="Simulate clients", description="Simulate mutiple calls.")
+def sim_clients(background_tasks: BackgroundTasks,clients: Optional[int]=1):
+    val,target1,target2= _checkTargets()
+    for i in range(clients):
+        print("WILL (propably) FORWARD")
+        forw,targ=_decide_forward( val,target1,target2,0)
+        if forw is True:
+            ft=targ+"stress"
+            print("----->",ft,"<------")
+            background_tasks.add_task( requests.get, ft)
+
+
 
 @app.get("/stress_random",summary="Stress CPU", description="Stress cpu. Random number of cpus will be hogged (2-8) for random time (10-30 secs).")
 def brstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[int]=1, duration: Optional[int] = 10):
