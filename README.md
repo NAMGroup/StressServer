@@ -9,7 +9,7 @@ For the PoC developed the web server needs to be able to redirect each accepted 
 
                                                                                                                             
 +---------+                +----------+                              +----------+                                           
-|         |                |          |                              |          |                                           
+|         |     |          |                              |          |                                           
 |   WS1   |--------------->|    WS2   |----------------------------->|   WS_S   |                                           
 |         |                |          |              |               |          |                                           
 +---------+                +----------+              |               +----------+                                           
