@@ -111,7 +111,11 @@ def _redir( target:str, get_req: str,action:str):
     
     ft=target+action+"?"+str(get_req.query_params)
     print("----->",ft,"<------")
-    x = requests.get(ft)
+    try:
+        x = requests.get(ft)
+    except requests.exceptions.RequestException as e: 
+        print(e)
+        print("OOPS. Nobody is answering....")
     print(x.status_code)
     print("-->",x,"<--")
 
@@ -184,7 +188,7 @@ def bstress(request: Request,background_tasks: BackgroundTasks, cpu: Optional[in
 
 
 @app.get("/sim_clients",summary="Simulate clients", description="Simulate mutiple calls.")
-def sim_clients(background_tasks: BackgroundTasks,clients: Optional[int]=1,all: Optional[bool]=True):
+def sim_clients(background_tasks: BackgroundTasks,clients: Optional[int]=10,all: Optional[bool]=True):
     forwarded=0
     val,target1,target2= _checkTargets()
     for i in range(clients):
