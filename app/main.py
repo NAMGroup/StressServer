@@ -113,13 +113,13 @@ def _redir( target:str, get_req: str,action:str):
     print("----->",ft,"<------")
     try:
         x = requests.get(ft)
+        print(x.status_code)
+        print("-->",x,"<--")
     except requests.exceptions.RequestException as e: 
         print(e)
         print("OOPS. Nobody is answering....")
-    print(x.status_code)
-    print("-->",x,"<--")
 
-    print("END REDIR")
+     print("END REDIR")
 
 
 def _stress(cpus: int, duration: int):
