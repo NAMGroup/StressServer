@@ -76,3 +76,5 @@ Example6:
     Meaning:
         Not valid 
         
+This server has been inculded in a docker image:
+https://hub.docker.com/repository/docker/papajohnuop/5g_nam_lab
